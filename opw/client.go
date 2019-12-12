@@ -32,7 +32,7 @@ func (c *Client) List() ([]*Item, error) {
 		return nil, err
 	}
 
-	items := []*Item{}
+	var items []*Item
 	if err := json.Unmarshal(out, &items); err != nil {
 		return nil, err
 	}
