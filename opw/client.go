@@ -37,7 +37,7 @@ func (c *Client) GetItem(uuid string) (*Item, error) {
 }
 
 func (c *Client) SignIn() error {
-	passphrase, err := c.cfg.Passphrase()
+	passphrase, err := c.cfg.GetPassphrase()
 	if err != nil {
 		return err
 	}
