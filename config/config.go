@@ -15,24 +15,31 @@ type Config struct {
 	Secret     string
 	Subdomain  string
 	Cache      string
-	Passphrase string `mapstructure:"passphrase"`
+	Passphrase string
 	Aliases    map[string]string
 }
 
-func (c *Config) GetPassphrase() (string, error) {
-	v := strings.Split(c.Passphrase, ":")
-	logrus.Debugf("passphrase setting: %#v", v)
-	switch v[0] {
-	case "file":
-		return c.getPassphraseFile(v[1])
-	case "keychain":
-		return c.getPassphraseKeychain(v[1] + ":" + v[2])
-	}
-
-	return "", errors.New("unknown passphrase type: " + v[0])
+func (c *Config) GetSecret() (string, error) {
+	return c.getValue(c.Secret)
 }
 
-func (c *Config) getPassphraseFile(file string) (string, error) {
+func (c *Config) GetPassphrase() (string, error) {
+	return c.getValue(c.Passphrase)
+}
+
+func (c *Config) getValue(value string) (string, error) {
+	v := strings.Split(value, ":")
+	logrus.Debugf("value setting: %#v", v)
+	switch v[0] {
+	case "file":
+		return c.getValueFile(v[1])
+	case "keychain":
+		return c.getValueKeychain(v[1] + ":" + v[2])
+	}
+	return "", errors.New("unknown value type: " + v[0])
+}
+
+func (c *Config) getValueFile(file string) (string, error) {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return "", err
@@ -41,7 +48,7 @@ func (c *Config) getPassphraseFile(file string) (string, error) {
 	return string(data), nil
 }
 
-func (c *Config) getPassphraseKeychain(setting string) (string, error) {
+func (c *Config) getValueKeychain(setting string) (string, error) {
 	v := strings.Split(setting, ":")
 	secret, err := keyring.Get(v[0], v[1])
 	if err != nil {
