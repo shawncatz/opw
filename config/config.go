@@ -8,6 +8,7 @@ type Config struct {
 	Email          string
 	Secret         string
 	Subdomain      string
+	Cache          string
 	PassphraseFile string `mapstructure:"passphrase_file"`
 	Aliases        map[string]string
 }
