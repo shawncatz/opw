@@ -49,6 +49,7 @@ aliases: # set of aliases (key: value)
 # for keychain, the value is specified as 'keychain:service:account'
 # using the keychain is more secure
 
+# The secret currently isn't used
 #secret: file:/path/to/file/containing/secret
 secret: keychain:opw-secret:subdomain
 
@@ -66,6 +67,9 @@ passphrase: keychain:opw-passphrase:subdomain # keychain entry
 
 		logrus.Infof("use your package manager to install the 1password cli")
 		logrus.Infof("or see: https://1password.com/downloads/command-line/")
+		logrus.Infof("after installation, signin using: ")
+		logrus.Infof("'op signin subdmain.1password.org email secret'")
+		logrus.Infof("after you've done that, opw will handle managing a session for you")
 	},
 }
 
