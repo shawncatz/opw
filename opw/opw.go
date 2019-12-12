@@ -1,21 +1,7 @@
 package opw
 
-import (
-	"encoding/json"
-	"os/exec"
-)
+import "github.com/shawncatz/opw/config"
 
-func GetItem(uuid string) (*Item, error) {
-	out, err := exec.Command("/usr/local/bin/op", "get", "item", uuid).Output()
-	if err != nil {
-		return nil, err
-	}
-
-	item := &Item{}
-	err = json.Unmarshal([]byte(out), item)
-	if err != nil {
-		return nil, err
-	}
-
-	return item, nil
+func NewClient(cfg *config.Config) (*Client, error) {
+	return &Client{cfg}, nil
 }

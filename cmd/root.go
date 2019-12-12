@@ -23,17 +23,12 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/shawncatz/opw/config"
 )
 
 var cfgFile string
-var cfg *Config
-
-type Config struct {
-	Email     string
-	Secret    string
-	Subdomain string
-	Aliases   map[string]string
-}
+var cfg *config.Config
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -88,12 +83,14 @@ func initConfig() {
 
 	viper.AutomaticEnv() // read in environment variables that match
 
-	cfg = &Config{}
+	cfg = &config.Config{}
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warnf("could not read config file: %s", err)
+		os.Exit(1)
 	}
 	if err := viper.Unmarshal(cfg); err != nil {
 		logrus.Errorf("error loading config: %s", err)
+		os.Exit(1)
 	}
 }

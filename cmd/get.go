@@ -32,13 +32,25 @@ var getCmd = &cobra.Command{
 	Short: "get password from 1password",
 	Long:  "get password from 1password",
 	Run: func(cmd *cobra.Command, args []string) {
+		client, err := opw.NewClient(cfg)
+		if err != nil {
+			logrus.Errorf("error getting client: %s", err)
+			return
+		}
+
+		err = client.SignIn()
+		if err != nil {
+			logrus.Errorf("error getting signin: %s", err)
+			return
+		}
+
 		uuid := args[0]
 		alias := cfg.Aliases[uuid]
 		if alias != "" {
 			uuid = alias
 		}
 
-		item, err := opw.GetItem(uuid)
+		item, err := client.GetItem(uuid)
 		if err != nil {
 			logrus.Errorf("error getting item: %s", err)
 			return
