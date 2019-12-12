@@ -17,10 +17,14 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/shawncatz/opw/opw"
-	"github.com/spf13/cobra"
+
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
+
+	"github.com/shawncatz/opw/opw"
 )
+
+var passwordFlag bool
 
 // getCmd represents the get command
 var getCmd = &cobra.Command{
@@ -28,13 +32,23 @@ var getCmd = &cobra.Command{
 	Short: "get password from 1password",
 	Long:  "get password from 1password",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("args %#v\n", args)
-		item, err := opw.GetItem(args[0])
-		if err != nil {
-			logrus.Errorf("error getting item: %s", err)
+		uuid := args[0]
+		alias := cfg.Aliases[uuid]
+		if alias != "" {
+			uuid = alias
 		}
 
-		fmt.Printf("%s / %s\n", item.Username(), item.Password())
+		item, err := opw.GetItem(uuid)
+		if err != nil {
+			logrus.Errorf("error getting item: %s", err)
+			return
+		}
+
+		if passwordFlag {
+			fmt.Println(item.Password())
+		} else {
+			fmt.Printf("%s / %s\n", item.Username(), item.Password())
+		}
 	},
 }
 
@@ -49,5 +63,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// getCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	getCmd.Flags().BoolVarP(&passwordFlag, "password", "p", false, "only print password")
 }

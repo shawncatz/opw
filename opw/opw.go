@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func GetItem(uuid string) (*Item, error){
+func GetItem(uuid string) (*Item, error) {
 	out, err := exec.Command("/usr/local/bin/op", "get", "item", uuid).Output()
 	if err != nil {
 		return nil, err
