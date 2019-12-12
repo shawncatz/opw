@@ -36,6 +36,20 @@ func (c *Client) GetItem(uuid string) (*Item, error) {
 	return item, nil
 }
 
+func (c *Client) List() ([]*Item, error) {
+	out, err := exec.Command("/usr/local/bin/op", "list", "items").Output()
+	if err != nil {
+		return nil, err
+	}
+
+	items := []*Item{}
+	if err := json.Unmarshal(out, &items); err != nil {
+		return nil, err
+	}
+
+	return items, nil
+}
+
 func (c *Client) SignIn() error {
 	passphrase, err := c.cfg.GetPassphrase()
 	if err != nil {
