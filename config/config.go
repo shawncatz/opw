@@ -21,7 +21,7 @@ type Config struct {
 
 func (c *Config) GetPassphrase() (string, error) {
 	v := strings.Split(c.Passphrase, ":")
-	logrus.Infof("passphrase setting: %#v", v)
+	logrus.Debugf("passphrase setting: %#v", v)
 	switch v[0] {
 	case "file":
 		return c.getPassphraseFile(v[1])
