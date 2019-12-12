@@ -19,10 +19,9 @@ import (
 	"fmt"
 
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
 
 	"github.com/shawncatz/opw/opw"
-
-	"github.com/spf13/cobra"
 )
 
 // listCmd represents the list command
