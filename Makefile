@@ -1,18 +1,26 @@
 NAME ?= opw
 VERSION = $(shell cat VERSION)
-FILE ?= $(NAME)-$(VERSION).zip
+FILE ?= $(NAME)-$(VERSION)
 GITUSER ?= shawncatz
 GITREPO ?= opw
 
 all: build
 
-build: test $(NAME) $(FILE)
+build: test build-all zip-all
 
-$(NAME):
-	@GOOS=linux go build -o $(NAME)
+build-all: build-linux build-darwin
 
-$(FILE):
-	zip $(FILE) ./$(NAME)
+build-darwin:
+	@GOOS=darwin go build -o $(NAME)-darwin
+
+build-linux:
+	@GOOS=linux go build -o $(NAME)-linux
+
+zip-darwin:
+	zip $(FILE) ./$(NAME)-darwin
+
+zip-linux:
+	zip $(FILE) ./$(NAME)-linux
 
 release: clean build
 	git tag -f v$(VERSION)
