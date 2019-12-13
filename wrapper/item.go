@@ -1,32 +1,32 @@
-package opw
+package wrapper
 
 type Item struct {
-	UUID string
+	UUID         string
 	TemplateUUID string
-	Trashed string
-	CreatedAt string
-	UpdatedAt string
-	ChangerUUID string
-	ItemVersion int
-	VaultUUID string
-	Details struct {
+	Trashed      string
+	CreatedAt    string
+	UpdatedAt    string
+	ChangerUUID  string
+	ItemVersion  int
+	VaultUUID    string
+	Details      struct {
 		Fields []struct {
 			Designation string
-			ID string
-			Name string
-			Type string
-			Value string
+			ID          string
+			Name        string
+			Type        string
+			Value       string
 		}
 		HTMLForm struct {
 			HTMLMethod string
 		}
-		Password string
+		Password        string
 		PasswordHistory []struct {
-			Time int
+			Time  int
 			Value string
 		}
 		Sections []struct {
-			Name string
+			Name  string
 			Title string
 		}
 	}
@@ -36,12 +36,12 @@ type Item struct {
 			U string
 		}
 		Ainfo string
-		PBE float64
+		PBE   float64
 		Pgrng bool
-		Ps int
-		Tags []string
+		Ps    int
+		Tags  []string
 		Title string
-		URL string
+		URL   string
 	}
 }
 

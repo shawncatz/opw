@@ -21,7 +21,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"github.com/shawncatz/opw/opw"
+	"github.com/shawncatz/opw/wrapper"
 )
 
 var passwordFlag bool
@@ -32,7 +32,7 @@ var getCmd = &cobra.Command{
 	Short: "get password from 1password",
 	Long:  "get password from 1password",
 	Run: func(cmd *cobra.Command, args []string) {
-		client, err := opw.NewClient(cfg)
+		client, err := wrapper.NewClient(cfg)
 		if err != nil {
 			logrus.Errorf("error getting client: %s", err)
 			return

@@ -1,4 +1,4 @@
-package opw
+package wrapper
 
 import "github.com/shawncatz/opw/config"
 
