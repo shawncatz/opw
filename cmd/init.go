@@ -24,6 +24,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var forceFlag bool
+
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
@@ -56,7 +58,7 @@ secret: keychain:opw-secret:subdomain
 #passphrase: file:/path/to/file/containing/passphrase
 passphrase: keychain:opw-passphrase:subdomain # keychain entry
 `
-		if _, err := os.Stat(home + "/.opw.yaml"); os.IsNotExist(err) {
+		if _, err := os.Stat(home + "/.opw.yaml"); os.IsNotExist(err) || forceFlag {
 			err = ioutil.WriteFile(home+"/.opw.yaml", []byte(config), 0600)
 			if err != nil {
 				logrus.Errorf("error writing config file: %s", err)
@@ -84,5 +86,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// initCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	initCmd.Flags().BoolVarP(&forceFlag, "force", "f", false, "overwrite the configuration file if it exists")
 }
