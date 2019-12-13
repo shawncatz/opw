@@ -4,7 +4,6 @@ go 1.13
 
 require (
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/olivere/elastic v6.2.26+incompatible
 	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/afero v1.2.2 // indirect
