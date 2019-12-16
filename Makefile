@@ -6,7 +6,7 @@ GITUSER ?= shawncatz
 GITREPO ?= opw
 LDFLAGS = -s -w -X cmd.version=$(VERSION)
 
-all: test build ## Build and run tests
+all: test ## Build and run tests
 
 test: ## Run tests
 	go test -v ./...
@@ -33,7 +33,7 @@ $(LINUX).zip: $(LINUX)
 $(DARWIN).zip: $(DARWIN)
 	cd build/darwin/ && zip $(NAME).zip $(NAME)
 
-release: clean build release-create release-darwin release-linux
+release: clean build release-create release-darwin release-linux ## Create Github Release
 
 release-create:
 	git tag -f v$(VERSION)
@@ -66,7 +66,7 @@ release-delete:
 release-info:
 	github-release info -u $(GITUSER) -r $(GITREPO)
 
-deps:
+deps: ## Install Dependencies
 	go get -u github.com/aktau/github-release
 	go mod tidy
 
