@@ -29,6 +29,7 @@ import (
 
 var cfgFile string
 var cfg *config.Config
+var version string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
