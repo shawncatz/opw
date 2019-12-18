@@ -29,16 +29,13 @@ import (
 
 var cfgFile string
 var cfg *config.Config
-var version string
+var Version = "development"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "opw",
 	Long:  "simplified interface to 1password",
 	Short: "simplified interface to 1password",
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//Run: func(cmd *cobra.Command, args []string) {}
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

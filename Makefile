@@ -4,7 +4,7 @@ DARWIN=build/darwin/$(NAME)
 VERSION = $(shell cat VERSION)
 GITUSER ?= shawncatz
 GITREPO ?= opw
-LDFLAGS = -s -w -X cmd.version=$(VERSION)
+LDFLAGS = -s -w -X github.com/shawncatz/opw/cmd.Version=v$(VERSION)
 
 all: test ## Build and run tests
 
