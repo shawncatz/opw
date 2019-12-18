@@ -9,10 +9,14 @@ LDFLAGS = -s -w -X github.com/shawncatz/opw/cmd.Version=v$(VERSION)
 all: test ## Build and run tests
 
 test: ## Run tests
-	go test -v ./...
+	@go test -v ./...
 
 clean: ## Remove previous build
-	rm -rf build
+	@rm -rf build
+
+install: ## Install build locally
+	@echo installing...
+	@go install -i -v -ldflags="$(LDFLAGS)"
 
 build: test linux darwin ## Build binaries
 	@echo version: $(VERSION)
@@ -60,10 +64,10 @@ release-linux:
         --name "$(NAME)-darwin-amd64-$(VERSION).zip" \
         --file "build/darwin/$(NAME).zip"
 
-release-delete:
+release-delete: ## Remove Github Release
 	github-release delete -u $(GITUSER) -r $(GITREPO) -t v$(VERSION)
 
-release-info:
+release-info: ## Get Release Information
 	github-release info -u $(GITUSER) -r $(GITREPO)
 
 deps: ## Install Dependencies
