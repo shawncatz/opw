@@ -94,4 +94,8 @@ func initConfig() {
 		logrus.Errorf("error loading config: %s", err)
 		os.Exit(1)
 	}
+
+	if cfg.Debug {
+		logrus.SetLevel(logrus.DebugLevel)
+	}
 }

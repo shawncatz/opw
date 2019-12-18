@@ -62,11 +62,11 @@ func (c *Cache) Set(key, value string, expires time.Duration) error {
 	return c.write()
 }
 
-func (c *Cache) Fetch(key string, expires time.Duration, f func() (string, error)) (string, error) {
+func (c *Cache) Fetch(key string, expires time.Duration, force bool, f func() (string, error)) (string, error) {
 	var err error
 
 	v := c.Get(key)
-	if v == "" {
+	if v == "" || force {
 		v, err = f()
 		if err != nil {
 			return v, err

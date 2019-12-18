@@ -39,6 +39,7 @@ var listCmd = &cobra.Command{
 		err = client.SignIn()
 		if err != nil {
 			logrus.Errorf("error getting signin: %s", err)
+			logrus.Errorf("you may need to run 'opw signin' first")
 			return
 		}
 

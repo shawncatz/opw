@@ -17,6 +17,7 @@ type Config struct {
 	Cache      string
 	Passphrase string
 	Aliases    map[string]string
+	Debug      bool
 }
 
 func (c *Config) GetSecret() (string, error) {

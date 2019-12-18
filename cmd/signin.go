@@ -20,20 +20,28 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github.com/shawncatz/opw/wrapper"
 )
 
 // signinCmd represents the signin command
 var signinCmd = &cobra.Command{
 	Use:   "signin",
-	Short: "generate a signin command for 'op'",
-	Long:  "generate a signin command for 'op'",
+	Short: "do a full sign in to 'op'",
+	Long:  "do a full sign in to 'op'",
 	Run: func(cmd *cobra.Command, args []string) {
-		s, err := cfg.GetSecret()
+		client, err := wrapper.NewClient(cfg)
 		if err != nil {
-			logrus.Errorf("error getting secret: %s", err)
+			logrus.Errorf("error getting client: %s", err)
 			return
 		}
-		fmt.Printf("op signin %s.1password.com %s %s\n", cfg.Subdomain, cfg.Email, s)
+
+		if err := client.SignInFull(); err != nil {
+			logrus.Errorf("error during signin: %s", err)
+			return
+		}
+
+		fmt.Printf("signed in\n")
 	},
 }
 
